@@ -9,5 +9,6 @@ type App struct {
 }
 
 func (c App) Index() revel.Result {
+	c.Flash.Success("Welcome, ahihi")
 	return c.Render()
 }

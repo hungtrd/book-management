@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"revel-app-demo/app/models"
@@ -10,25 +11,37 @@ import (
 	"github.com/revel/revel"
 )
 
-type ApiBook struct {
+type Books struct {
 	ApiController
 }
 
-func (c *ApiBook) Create() revel.Result {
-	book := &models.Book{}
-	c.Params.BindJSON(book)
+type BookCreateReq struct {
+	Title       string `json:"title"`
+	Description string `json:"description"`
+}
 
-	book.Validate()
+func (c Books) Create() revel.Result {
+	b := &models.Book{}
+	c.Params.BindJSON(b)
+
+	fmt.Println(b)
+
+	b.Validate(c.Validation)
 	if c.Validation.HasErrors() {
-		return c.RenderJSON(&ErrorResponse{ERR_VALIDATE, ErrorMessage(ERR_VALIDATE)})
+		return c.RenderJSON(&ErrorResponse{ERR_VALIDATE, "ErrorMessage(ERR_VALIDATE)"})
 	}
 
-	err := c.Txn.Insert(book)
-	if err != nil {
-		panic(err)
-	}
+	book := b.Create()
 
 	return c.RenderJSON(&Response{OK, book})
+}
+
+func (c Books) Index() revel.Result {
+	// var books []models.Book
+	b := models.Book{}
+	books := b.GetList()
+
+	return c.RenderJSON(&Response{OK, books})
 }
 
 func BindJsonParams(i io.Reader, s interface{}) error {

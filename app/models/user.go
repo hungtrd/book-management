@@ -26,7 +26,7 @@ func (u *User) Validate() error {
 	v.Check(
 		u.Password,
 		revel.Required{},
-		revel.MinSize{4},
+		// revel.MinSize{4},
 	)
 	if v.HasErrors() {
 		return errors.New("password is validate error")

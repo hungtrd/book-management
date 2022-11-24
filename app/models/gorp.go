@@ -14,7 +14,7 @@ var (
 	Txn *gorp.Transaction
 )
 
-func InitDB() {
+func InitDBM() {
 	db.Init()
 	Dbm = &gorp.DbMap{
 		Db:      db.Db,
