@@ -23,6 +23,7 @@ func (book *Book) Validate(v *revel.Validation) {
 	v.Required(book.Title).Message("Title is required")
 	v.Required(book.Author).Message("Author is required")
 	v.Required(book.Description).Message("Description is required")
+	v.Required(book.ReleaseDate).Message("Release date is required")
 }
 
 func (book *Book) GetList() []Book {
@@ -36,8 +37,14 @@ func (book *Book) Create() Book {
 	b := Book{
 		Title:       book.Title,
 		Description: book.Description,
+		Author:      book.Author,
+		ReleaseDate: book.ReleaseDate,
+		TotalPage:   book.TotalPage,
+		Category:    book.Category,
+		CreatedAt:   time.Now(),
+		UpdatedAt:   time.Now(),
 	}
-	app.DB.Create(&b)
+	app.DB.Create(&book)
 
 	return b
 }

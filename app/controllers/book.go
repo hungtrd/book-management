@@ -36,7 +36,6 @@ func (c Books) Create(book models.Book) revel.Result {
 
 	_ = book.Create()
 
-	// return c.RenderJSON(&Response{OK, book})
 	c.Flash.Success("Create successfully!")
 	return c.Redirect(routes.Books.Index())
 }

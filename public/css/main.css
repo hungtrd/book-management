@@ -1,0 +1,12 @@
+body {
+  background-color: #f3f4f9;
+}
+
+header, footer {
+}
+
+.book-form {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
