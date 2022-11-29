@@ -1,8 +1,6 @@
 package models
 
 import (
-	"errors"
-	"fmt"
 	"revel-app-demo/app"
 	"time"
 
@@ -13,44 +11,40 @@ type Book struct {
 	ID          int       `json:"id"`
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
+	Author      string    `json:"author"`
+	ReleaseDate time.Time `json:"release_date"`
+	TotalPage   int       `json:"total_page"`
+	Category    int       `json:"category"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
 }
 
-func (b *Book) Validate(v *revel.Validation) error {
-	v.Check(
-		b.Title,
-		revel.Required{},
-	)
-	fmt.Println(v.Errors)
-
-	if v.HasErrors() {
-		return errors.New("title is validate error")
-	}
-
-	return nil
+func (book *Book) Validate(v *revel.Validation) {
+	v.Required(book.Title).Message("Title is required")
+	v.Required(book.Author).Message("Author is required")
+	v.Required(book.Description).Message("Description is required")
 }
 
-func (b *Book) GetList() []Book {
+func (book *Book) GetList() []Book {
 	books := []Book{}
 	app.DB.Find(&books)
 
 	return books
 }
 
-func (b *Book) Create() Book {
-	book := Book{
-		Title:       b.Title,
-		Description: b.Description,
+func (book *Book) Create() Book {
+	b := Book{
+		Title:       book.Title,
+		Description: book.Description,
 	}
-	app.DB.Create(&book)
+	app.DB.Create(&b)
 
-	return book
+	return b
 }
 
-func (b *Book) GetByID(id int) Book {
-	book := Book{}
-	app.DB.Where("id = ?", id).First(&book)
+func (book *Book) GetByID(id int) Book {
+	b := Book{}
+	app.DB.Where("id = ?", id).First(&b)
 
-	return book
+	return b
 }

@@ -1,0 +1,65 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+
+<h1> Hello world</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</div>
+
+<form action="{{url "Books.Create"}}" method="POST">
+  {{with $field := field "book.Title" .}}
+    <p class="{{$field.ErrorClass}}">
+      <strong>Title:</strong>
+      <input type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
+      <span class="error">{{$field.Error}}</span>
+    </p>
+  {{end}}
+  {{with $field := field "book.Description" .}}
+    <p class="{{$field.ErrorClass}}">
+      <strong>Description:</strong> 
+      <textarea type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"></textarea>*
+      <span class="error">{{$field.Error}}</span>
+    </p>
+  {{end}}
+  {{with $field := field "book.Author" .}}
+    <p class="{{$field.ErrorClass}}">
+      <strong>Author:</strong>
+      <input type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
+      <span class="error">{{$field.Error}}</span>
+    </p>
+  {{end}}
+  {{with $field := field "book.ReleaseDate" .}}
+    <p class="{{$field.ErrorClass}}">
+      <strong>Release Date:</strong>
+      <input type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
+      <span class="error">{{$field.Error}}</span>
+    </p>
+  {{end}}
+  {{with $field := field "book.TotalPage" .}}
+    <p class="{{$field.ErrorClass}}">
+      <strong>Page:</strong>
+      <input type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
+      <span class="error">{{$field.Error}}</span>
+    </p>
+  {{end}}
+  <p>
+    <strong>Category:</strong>
+    {{with $field := field "book.Category" .}}
+    <select name="{{$field.Name}}">
+      {{option $field "1" "Science"}}
+      {{option $field "2" "Fiction"}}
+      {{option $field "3" "Self-help"}}
+    </select>
+    {{end}}
+  </p>
+  <p class="buttons">
+    <input type="submit" value="Register"> <a href="{{url "Books.Index"}}">Cancel</a>
+  </p>
+</form>
+
+{{template "footer.html" .}}

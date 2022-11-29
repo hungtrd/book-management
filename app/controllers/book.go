@@ -1,39 +1,44 @@
 package controllers
 
 import (
-	"encoding/json"
-	"errors"
 	"fmt"
-	"io"
-	"io/ioutil"
 	"revel-app-demo/app/models"
+	"revel-app-demo/app/routes"
 
 	"github.com/revel/revel"
 )
 
 type Books struct {
 	ApiController
+	// App
 }
 
-type BookCreateReq struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
+// type BookCreateReq struct {
+// 	Title       string `json:"title"`
+// 	Description string `json:"description"`
+// }
+
+func (c Books) New() revel.Result {
+	return c.Render()
 }
 
-func (c Books) Create() revel.Result {
-	b := &models.Book{}
-	c.Params.BindJSON(b)
+func (c Books) Create(book models.Book) revel.Result {
+	fmt.Println(book)
 
-	fmt.Println(b)
+	book.Validate(c.Validation)
 
-	b.Validate(c.Validation)
 	if c.Validation.HasErrors() {
-		return c.RenderJSON(&ErrorResponse{ERR_VALIDATE, "ErrorMessage(ERR_VALIDATE)"})
+		c.Flash.Error("Please fix errors below")
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.Books.New())
 	}
 
-	book := b.Create()
+	_ = book.Create()
 
-	return c.RenderJSON(&Response{OK, book})
+	// return c.RenderJSON(&Response{OK, book})
+	c.Flash.Success("Create successfully!")
+	return c.Redirect(routes.Books.Index())
 }
 
 func (c Books) Index() revel.Result {
@@ -44,15 +49,15 @@ func (c Books) Index() revel.Result {
 	return c.RenderJSON(&Response{OK, books})
 }
 
-func BindJsonParams(i io.Reader, s interface{}) error {
-	bytes, err := ioutil.ReadAll(i)
-	if err != nil {
-		return errors.New("can't read request data.")
-	}
+// func BindJsonParams(i io.Reader, s interface{}) error {
+// 	bytes, err := ioutil.ReadAll(i)
+// 	if err != nil {
+// 		return errors.New("can't read request data.")
+// 	}
 
-	if len(bytes) == 0 {
-		return errors.New("data is nil")
-	}
+// 	if len(bytes) == 0 {
+// 		return errors.New("data is nil")
+// 	}
 
-	return json.Unmarshal(bytes, s)
-}
+// 	return json.Unmarshal(bytes, s)
+// }

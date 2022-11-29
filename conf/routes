@@ -15,8 +15,9 @@ GET     /favicon.ico                            404
 # Map static resources from the /app/public folder to the /public path
 GET     /public/*filepath                       Static.Serve("public")
 
-GET  /books Books.Index
-POST /books Books.Create
+GET     /books                                  Books.Index
+POST    /books                                  Books.Create
+GET     /books/new                              Books.New
 # PUT  /books/:id Books.Edit
 
 # Catch all, this will route any request into the controller path
