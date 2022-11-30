@@ -36,7 +36,7 @@ func (c Books) Create(book models.Book) revel.Result {
 
 	_ = book.Create()
 
-	c.Flash.Success("Create successfully!")
+	c.Flash.Success("Add book successfully!")
 	return c.Redirect(routes.Books.Index())
 }
 
@@ -54,7 +54,33 @@ func (c Books) Show(id int) revel.Result {
 	return c.Render(book)
 }
 
-func (c Books) Update(id int) revel.Result {
+func (c Books) Update(id int, book models.Book) revel.Result {
+	fmt.Println("update")
+	fmt.Println(id)
+	fmt.Println(book)
+	b := models.Book{}
+
+	book.Validate(c.Validation)
+
+	if c.Validation.HasErrors() {
+		c.Flash.Error("Please fix errors below")
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.Books.Show(id))
+	}
+
+	b.Update(id, book)
+
+	c.Flash.Success("Update book successfully!")
+	return c.Redirect(routes.Books.Index())
+}
+
+func (c Books) Delete(id int) revel.Result {
+	b := models.Book{}
+
+	b.DeleteByID(id)
+
+	c.Flash.Success("Delete book successfully!")
 	return c.Redirect(routes.Books.Index())
 }
 

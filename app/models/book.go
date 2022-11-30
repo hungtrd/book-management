@@ -55,3 +55,13 @@ func (book *Book) GetByID(id int) Book {
 
 	return b
 }
+
+func (book *Book) Update(id int, b Book) {
+	b.ID = id
+	b.UpdatedAt = time.Now()
+	app.DB.Save(&b)
+}
+
+func (book *Book) DeleteByID(id int) {
+	app.DB.Delete(&Book{}, id)
+}
