@@ -41,11 +41,21 @@ func (c Books) Create(book models.Book) revel.Result {
 }
 
 func (c Books) Index() revel.Result {
-	// var books []models.Book
 	b := models.Book{}
 	books := b.GetList()
 
-	return c.RenderJSON(&Response{OK, books})
+	return c.Render(books)
+}
+
+func (c Books) Show(id int) revel.Result {
+	b := models.Book{}
+
+	book := b.GetByID(id)
+	return c.Render(book)
+}
+
+func (c Books) Update(id int) revel.Result {
+	return c.Redirect(routes.Books.Index())
 }
 
 // func BindJsonParams(i io.Reader, s interface{}) error {

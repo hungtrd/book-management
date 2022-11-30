@@ -1,0 +1,42 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+
+<h1>Book List</h1>
+<a class="btn btn-success" href="{{url "Books.New"}}">Add book</a>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</a>
+
+<div class="book list">
+  <div class="row">
+    {{if .books}}
+      {{range .books}}
+        <div class="card rounded-lg shadow col-md-5 m-3 p-3" style="max-width: 540px;">
+          <div class="d-flex align-items-center row no-gutters">
+            <div class="col-md-4">
+              <img style="max-width: 100%;" src="https://chaubui.net/wp-content/uploads/2021/11/123.jpg" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <a class="btn btn-outline-success btn-sm mx-1" href="#">Edit</a>
+            <a class="btn btn-outline-danger btn-sm mx-1" href="#">Delete</a>
+          </div>
+        </div>
+      {{end}}
+    {{end}}
+  </div>
+</div>
+
+{{template "footer.html" .}}

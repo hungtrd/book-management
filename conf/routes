@@ -18,7 +18,8 @@ GET     /public/*filepath                       Static.Serve("public")
 GET     /books                                  Books.Index
 POST    /books                                  Books.Create
 GET     /books/new                              Books.New
-# PUT  /books/:id Books.Edit
+GET     /books/:id                              Books.Show
+PUT     /books/:id                              Books.Update
 
 # Catch all, this will route any request into the controller path
 #

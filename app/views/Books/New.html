@@ -1,68 +1,93 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
 
-<h1> Add book</h1>
+<h1>Add new book</h1>
 
 <div class="container">
   <div class="row">
-    <div class="span6">
+    <div class="col-md-12">
       {{template "flash.html" .}}
     </div>
   </div>
 </div>
 
-<div class="p-3 book-form">
-  <form action="{{url "Books.Create"}}" method="POST">
-    {{with $field := field "book.Title" .}}
-      <p class="{{$field.ErrorClass}}">
-        <strong>Title:</strong>
-        <input type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
-        <span class="error">{{$field.Error}}</span>
-      </p>
-    {{end}}
-    {{with $field := field "book.Description" .}}
-      <p class="{{$field.ErrorClass}}">
-        <strong>Description:</strong> 
-        <textarea type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}">{{$field.Flash}}</textarea>*
-        <span class="error">{{$field.Error}}</span>
-      </p>
-    {{end}}
-    {{with $field := field "book.Author" .}}
-      <p class="{{$field.ErrorClass}}">
-        <strong>Author:</strong>
-        <input type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
-        <span class="error">{{$field.Error}}</span>
-      </p>
-    {{end}}
-    {{with $field := field "book.ReleaseDate" .}}
-      <p class="{{$field.ErrorClass}}">
-        <strong>Release Date:</strong>
-        <input type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
-        <span class="error">{{$field.Error}}</span>
-      </p>
-    {{end}}
-    {{with $field := field "book.TotalPage" .}}
-      <p class="{{$field.ErrorClass}}">
-        <strong>Page:</strong>
-        <input type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
-        <span class="error">{{$field.Error}}</span>
-      </p>
-    {{end}}
-    <p>
-      <strong>Category:</strong>
-      {{with $field := field "book.Category" .}}
-      <select name="{{$field.Name}}">
-        {{option $field "1" "Science"}}
-        {{option $field "2" "Fiction"}}
-        {{option $field "3" "Self-help"}}
-      </select>
-      {{end}}
-    </p>
-    <p class="buttons">
-      <input type="submit" value="Add">
-      <a href="{{url "Books.Index"}}">Cancel</a>
-    </p>
-  </form>
+<div class="shadow p-3 book-form">
+  <div class="row">
+    <div class="px-3 col-md-6 book-form--info">
+      <form class="shadow p-2" action="{{url "Books.Create"}}" method="POST">
+        {{with $field := field "book.Title" .}}
+          <div class="form-group col-md-12">
+            <label for="{{$field.Name}}">Title:</label>
+            <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="text" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
+            <!-- <span>*</span> -->
+            <div class="invalid-feedback">
+              {{$field.Error}}
+            </div>
+          </div>
+        {{end}}
+        {{with $field := field "book.Description" .}}
+          <div class="form-group col-md-12">
+            <label for="{{$field.Name}}">Description:</label>
+            <textarea class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" name="{{$field.Name}}" value="{{$field.Flash}}">{{$field.Flash}}</textarea>
+            <!-- <span>*</span> -->
+            <div class="invalid-feedback">
+              {{$field.Error}}
+            </div>
+          </div>
+        {{end}}
+        {{with $field := field "book.Author" .}}
+          <div class="form-group col-md-12">
+            <label for="{{$field.Name}}">Author:</label>
+            <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="text" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
+            <!-- <span>*</span> -->
+            <div class="invalid-feedback">
+              {{$field.Error}}
+            </div>
+          </div>
+        {{end}}
+        {{with $field := field "book.ReleaseDate" .}}
+          <div class="form-group col-md-12">
+            <label for="{{$field.Name}}">ReleaseDate:</label>
+            <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="text" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
+            <!-- <span>*</span> -->
+            <div class="invalid-feedback">
+              {{$field.Error}}
+            </div>
+          </div>
+        {{end}}
+        {{with $field := field "book.TotalPage" .}}
+          <div class="form-group col-md-12">
+            <label for="{{$field.Name}}">Total page:</label>
+            <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="text" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
+            <!-- <span>*</span> -->
+            <div class="invalid-feedback">
+              {{$field.Error}}
+            </div>
+          </div>
+        {{end}}
+        {{with $field := field "book.Category" .}}
+          <div class="form-group col-md-12">
+            <label for="{{$field.Name}}">Category:</label>
+            <select class="custom-select" name="{{$field.Name}}">
+              {{option $field "1" "Science"}}
+              {{option $field "2" "Fiction"}}
+              {{option $field "3" "Self-help"}}
+            </select>
+          </div>
+        {{end}}
+        <div class="form-group col-md-12">
+          <div class="d-flex justify-content-between">
+            <a class="btn btn-secondary" href="{{url "Books.Index"}}">Cancel</a>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-6 book-form--thumbnail">
+
+    </div>
+  </div>
 </div>
 
 {{template "footer.html" .}}
