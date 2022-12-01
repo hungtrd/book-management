@@ -1,7 +1,9 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
 
-<h1>Add new book</h1>
+<div class="d-flex justify-content-between align-items-center p-2 px-4">
+  <h1>Add new book</h1>
+</div>
 
 <div class="container">
   <div class="row">
@@ -22,7 +24,7 @@
         <div class="shadow p-3 m-1 rounded-lg row">
           {{with $field := field "book.Title" .}}
             <div class="form-group col-md-6">
-            <label for="{{$field.Name}}"><span class="text-danger">*</span>Title:</label>
+              <label for="{{$field.Name}}"><span class="text-danger">*</span>Title:</label>
               <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="text" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
               <!-- <span>*</span> -->
               <div class="invalid-feedback">

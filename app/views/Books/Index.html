@@ -1,8 +1,12 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
 
-<h1>Book List</h1>
-<a class="btn btn-success" href="{{url "Books.New"}}">Add book</a>
+<div class="d-flex justify-content-between align-items-center p-2 px-4">
+  <h1>Book List</h1>
+  <div>
+    <a class="btn btn-success" href="{{url "Books.New"}}">Add book</a>
+  </div>
+</div>
 
 <div class="container">
   <div class="row">
@@ -16,24 +20,27 @@
   <div class="row">
     {{if .books}}
       {{range .books}}
-        <div class="card rounded-lg shadow col-md-5 m-3 p-3" style="max-width: 540px;">
-          <div class="d-flex align-items-center row no-gutters">
+      <div class="col-md-6">
+        <div class="card rounded-lg shadow m-2 my-3 p-4">
+          <div class="d-flex align-items-stretch row no-gutters">
             <div class="col-md-4">
               <img style="max-width: 100%;" src="https://chaubui.net/wp-content/uploads/2021/11/123.jpg" alt="...">
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <h3 class="card-title mb-1">{{.Title}}</h3>
+                <p class="card-text"><small class="text-muted">Author: {{.Author}}</small></p>
+                <p class="card-text">{{.Description}}</p>
+                <p class="card-text"><small class="text-muted">Release date: {{.ReleaseDate.Format "01-02-2006"}}</small></p>
               </div>
             </div>
           </div>
           <div class="d-flex justify-content-end">
-            <a class="btn btn-outline-success btn-sm mx-1" href="{{url "Books.Show" .ID}}">Edit</a>
-          <button class="btn btn-outline-danger btn-sm mx-1 delete-book" data-toggle="modal" data-target="#deleteModal" data-value="{{.ID}}">Delete</button>
+            <a class="btn btn-primary btn-sm mx-1" href="{{url "Books.Show" .ID}}">Edit</a>
+            <button class="btn btn-danger btn-sm mx-1 delete-book" data-toggle="modal" data-target="#deleteModal" data-value="{{.ID}}">Delete</button>
           </div>
         </div>
+      </div>
       {{end}}
     {{end}}
   </div>
@@ -43,13 +50,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        Are you sure?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -22,7 +22,6 @@ type Book struct {
 func (book *Book) Validate(v *revel.Validation) {
 	v.Required(book.Title).Message("Title is required")
 	v.Required(book.Author).Message("Author is required")
-	v.Required(book.Description).Message("Description is required")
 	v.Required(book.ReleaseDate).Message("Release date is required")
 }
 

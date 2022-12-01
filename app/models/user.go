@@ -1,36 +1,51 @@
 package models
 
 import (
-	"errors"
 	"regexp"
+	"revel-app-demo/app"
+	"time"
 
 	"github.com/revel/revel"
 )
 
 type User struct {
-	ID       int    `json:"id"`
-	MailAddr string `json:"mailaddr"`
-	Password string `json:"password"`
-	Created  int64  `json:"-"`
-	Updated  int64  `json:"-"`
+	ID        int       `json:"id"`
+	Username  string    `json:"username"`
+	Fullname  string    `json:"fullname"`
+	Email     string    `json:"email"`
+	Password  string    `json:"password"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
 
-func (u *User) Validate() error {
-	var v revel.Validation
+var usernameRegex = regexp.MustCompile(`^\w*$`)
+var emailRegex = regexp.MustCompile(`([a-zA-Z0-9])+@gmail.com`)
 
-	v.Match(u.MailAddr, regexp.MustCompile(`([a-zA-Z0-9])+@gmail.com`))
-	if v.HasErrors() {
-		return errors.New("mail address is validate error")
-	}
+func (user *User) Validate(v *revel.Validation) {
+	v.Required(user.Username).Message("Username is required")
+	v.Required(user.Fullname).Message("Fullname is required")
+	v.Required(user.Email).Message("Email is required")
+	v.Required(user.Password).Message("Password is required")
+
+	v.Match(user.Email, emailRegex).Message("Email is invalid")
+	v.Match(user.Username, usernameRegex).Message("Username is invalid")
 
 	v.Check(
-		u.Password,
+		user.Password,
 		revel.Required{},
-		// revel.MinSize{4},
 	)
-	if v.HasErrors() {
-		return errors.New("password is validate error")
-	}
+}
 
-	return nil
+func (user *User) Create() User {
+	u := User{
+		Username:  user.Username,
+		Fullname:  user.Fullname,
+		Email:     user.Email,
+		Password:  user.Password,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+	app.DB.Create(&user)
+
+	return u
 }
