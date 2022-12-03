@@ -17,7 +17,7 @@
   <form class="p-3" action="{{url "App.UserLogin"}}" method="POST">
     <div class="row">
       <div class="form-group col-md-12">
-        <label for="username">Email:</label>
+        <label for="username">Username:</label>
         <input class="form-control {{if .errors.username}}is-invalid{{end}}" type="text" id="username" name="username" value="{{.flash.username}}">
         <div class="invalid-feedback">
           {{.errors.username}}

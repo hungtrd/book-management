@@ -26,6 +26,7 @@ GET     /login                                  App.Login
 POST    /login                                  App.UserLogin
 GET     /signup                                 App.Signup
 POST    /signup                                 App.UserSignup
+GET     /logout                                 App.Logout
 
 # Catch all, this will route any request into the controller path
 #

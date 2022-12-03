@@ -29,11 +29,6 @@ func (user *User) Validate(v *revel.Validation) {
 
 	v.Match(user.Email, emailRegex).Message("Email is invalid")
 	v.Match(user.Username, usernameRegex).Message("Username is invalid")
-
-	v.Check(
-		user.Password,
-		revel.Required{},
-	)
 }
 
 func (user *User) Create() User {
@@ -46,6 +41,14 @@ func (user *User) Create() User {
 		UpdatedAt: time.Now(),
 	}
 	app.DB.Create(&user)
+
+	return u
+}
+
+func (user *User) GetUserByName(username string) User {
+	u := User{}
+
+	app.DB.Where("username = ?", username).First(&u)
 
 	return u
 }

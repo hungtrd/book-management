@@ -17,7 +17,8 @@
   <form class="p-3" action="{{url "Books.Update" .book.ID}}" method="POST">
     <div class="row">
       <div class="col-md-5 book-form--thumbnail">
-        <div class="shadow p-3 m-1 rounded-lg" style="min-height:400px;">
+        <div class="shadow p-3 m-1 rounded-lg text-center" style="height:500px">
+          <img class="book-cover" src="https://chaubui.net/wp-content/uploads/2021/11/123.jpg" alt="...">
         </div>
       </div>
       <div class="col-md-7 book-form--info">
@@ -31,7 +32,6 @@
                 name="{{$field.Name}}"
                 value="{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value}}{{end}}"
               >
-              <!-- <span>*</span> -->
               <div class="invalid-feedback">
                 {{$field.Error}}
               </div>
@@ -46,7 +46,6 @@
                 name="{{$field.Name}}"
                 value="{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value}}{{end}}"
               >
-              <!-- <span>*</span> -->
               <div class="invalid-feedback">
                 {{$field.Error}}
               </div>
@@ -57,7 +56,6 @@
               <label for="{{$field.Name}}">Description:</label>
               <textarea class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" rows="4"
                 name="{{$field.Name}}">{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value}}{{end}}</textarea>
-              <!-- <span>*</span> -->
               <div class="invalid-feedback">
                 {{$field.Error}}
               </div>
@@ -72,7 +70,6 @@
                 name="{{$field.Name}}"
                 value="{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value.Format "2006-01-02"}}{{end}}"
               >
-              <!-- <span>*</span> -->
               <div class="invalid-feedback">
                 {{$field.Error}}
               </div>
@@ -87,7 +84,6 @@
                 name="{{$field.Name}}"
                 value="{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value}}{{end}}"
               >
-              <!-- <span>*</span> -->
               <div class="invalid-feedback">
                 {{$field.Error}}
               </div>

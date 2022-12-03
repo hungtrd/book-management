@@ -9,14 +9,9 @@ import (
 )
 
 type Books struct {
-	ApiController
-	// App
+	// ApiController
+	App
 }
-
-// type BookCreateReq struct {
-// 	Title       string `json:"title"`
-// 	Description string `json:"description"`
-// }
 
 func (c Books) New() revel.Result {
 	return c.Render()
@@ -48,6 +43,13 @@ func (c Books) Index() revel.Result {
 }
 
 func (c Books) Show(id int) revel.Result {
+	// check user login
+	if user := c.connected(); user == nil {
+		c.Flash.Error("Please login first")
+		return c.Redirect(routes.Books.Index())
+	}
+
+	// handle request
 	b := models.Book{}
 
 	book := b.GetByID(id)
@@ -55,9 +57,13 @@ func (c Books) Show(id int) revel.Result {
 }
 
 func (c Books) Update(id int, book models.Book) revel.Result {
-	fmt.Println("update")
-	fmt.Println(id)
-	fmt.Println(book)
+	// check user login
+	if user := c.connected(); user == nil {
+		c.Flash.Error("Please login first")
+		return c.Redirect(routes.Books.Index())
+	}
+
+	// handle request
 	b := models.Book{}
 
 	book.Validate(c.Validation)
@@ -76,6 +82,13 @@ func (c Books) Update(id int, book models.Book) revel.Result {
 }
 
 func (c Books) Delete(id int) revel.Result {
+	// check user login
+	if user := c.connected(); user == nil {
+		c.Flash.Error("Please login first")
+		return c.Redirect(routes.Books.Index())
+	}
+
+	// handle request
 	b := models.Book{}
 
 	b.DeleteByID(id)

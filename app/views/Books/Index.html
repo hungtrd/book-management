@@ -3,9 +3,15 @@
 
 <div class="d-flex justify-content-between align-items-center p-2 px-4">
   <h1>Book List</h1>
+  {{if .user}}
   <div>
     <a class="btn btn-success" href="{{url "Books.New"}}">Add book</a>
   </div>
+  {{else}}
+  <div>
+    <a class="btn btn-success" href="{{url "App.Login"}}">Login to edit books</a>
+  </div>
+  {{end}}
 </div>
 
 <div class="container">
@@ -16,6 +22,7 @@
   </div>
 </a>
 
+{{if .user}}
 <div class="book list">
   <div class="row">
     {{if .books}}
@@ -45,6 +52,33 @@
     {{end}}
   </div>
 </div>
+{{else}}
+<div class="book list">
+  <div class="row">
+    {{if .books}}
+      {{range .books}}
+      <div class="col-md-6">
+        <div class="card rounded-lg shadow m-2 my-3 p-4">
+          <div class="d-flex align-items-stretch row no-gutters">
+            <div class="col-md-4">
+              <img style="max-width: 100%;" src="https://chaubui.net/wp-content/uploads/2021/11/123.jpg" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h3 class="card-title mb-1">{{.Title}}</h3>
+                <p class="card-text"><small class="text-muted">Author: {{.Author}}</small></p>
+                <p class="card-text">{{.Description}}</p>
+                <p class="card-text"><small class="text-muted">Release date: {{.ReleaseDate.Format "01-02-2006"}}</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{end}}
+    {{end}}
+  </div>
+</div>
+{{end}}
 
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
