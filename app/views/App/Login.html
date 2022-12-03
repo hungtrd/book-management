@@ -1,0 +1,41 @@
+{{set . "title" "Login"}}
+{{template "header.html" .}}
+
+<div class="d-flex justify-content-center align-items-center p-2 px-4">
+  <h1>Login</h1>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</div>
+
+<div class="shadow p-3 book-form m-auto" style="max-width: 500px;">
+  <form class="p-3" action="{{url "App.UserLogin"}}" method="POST">
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="username">Username:</label>
+        <input class="form-control {{if .errors.username}}is-invalid{{end}}" type="text" id="username" name="username" value="{{.flash.username}}">
+        <div class="invalid-feedback">
+          {{.errors.username}}
+        </div>
+      </div>
+      <div class="form-group col-md-12">
+        <label for="password">Password:</label>
+        <input class="form-control {{if .errors.password}}is-invalid{{end}}" type="password" id="password" name="password" value="{{.flash.password}}">
+        <div class="invalid-feedback">
+          {{.errors.password}}
+        </div>
+      </div>
+      <div class="form-group col-md-12 d-flex justify-content-between align-items-center">
+        <button class="btn btn-primary" type="submit">Login</button>
+        <a class="mx-2" href="{{url "App.Signup"}}">Register here!</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+{{template "footer.html" .}}

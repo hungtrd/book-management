@@ -1,0 +1,110 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+
+<div class="d-flex justify-content-between align-items-center p-2 px-4">
+  <h1>Book List</h1>
+  {{if .user}}
+  <div>
+    <a class="btn btn-success" href="{{url "Books.New"}}">Add book</a>
+  </div>
+  {{else}}
+  <div>
+    <a class="btn btn-success" href="{{url "App.Login"}}">Login to edit books</a>
+  </div>
+  {{end}}
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</a>
+
+{{if .user}}
+<div class="book list">
+  <div class="row">
+    {{if .books}}
+      {{range .books}}
+      <div class="col-md-6">
+        <div class="card rounded-lg shadow m-2 my-3 p-4">
+          <div class="d-flex align-items-stretch row no-gutters">
+            <div class="col-md-4">
+              <img style="max-width: 100%;" src="https://chaubui.net/wp-content/uploads/2021/11/123.jpg" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h3 class="card-title mb-1">{{.Title}}</h3>
+                <p class="card-text"><small class="text-muted">Author: {{.Author}}</small></p>
+                <p class="card-text">{{.Description}}</p>
+                <p class="card-text"><small class="text-muted">Release date: {{.ReleaseDate.Format "01-02-2006"}}</small></p>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <a class="btn btn-primary btn-sm mx-1" href="{{url "Books.Show" .ID}}">Edit</a>
+            <button class="btn btn-danger btn-sm mx-1 delete-book" data-toggle="modal" data-target="#deleteModal" data-value="{{.ID}}">Delete</button>
+          </div>
+        </div>
+      </div>
+      {{end}}
+    {{end}}
+  </div>
+</div>
+{{else}}
+<div class="book list">
+  <div class="row">
+    {{if .books}}
+      {{range .books}}
+      <div class="col-md-6">
+        <div class="card rounded-lg shadow m-2 my-3 p-4">
+          <div class="d-flex align-items-stretch row no-gutters">
+            <div class="col-md-4">
+              <img style="max-width: 100%;" src="https://chaubui.net/wp-content/uploads/2021/11/123.jpg" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h3 class="card-title mb-1">{{.Title}}</h3>
+                <p class="card-text"><small class="text-muted">Author: {{.Author}}</small></p>
+                <p class="card-text">{{.Description}}</p>
+                <p class="card-text"><small class="text-muted">Release date: {{.ReleaseDate.Format "01-02-2006"}}</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{end}}
+    {{end}}
+  </div>
+</div>
+{{end}}
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a class="btn btn-danger" id="delete-link" href="#">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(".delete-book").click(function(e){
+    let id = $(this).attr("data-value");
+    $("#delete-link").attr("href", `/books/${id}/delete`);
+  })
+
+</script>
+
+{{template "footer.html" .}}

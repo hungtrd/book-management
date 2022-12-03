@@ -1,0 +1,70 @@
+{{set . "title" "Sign Up"}}
+{{template "header.html" .}}
+
+<div class="d-flex justify-content-center align-items-center p-2 px-4">
+  <h1>Sign Up</h1>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</div>
+
+<div class="shadow p-3 book-form m-auto" style="max-width: 800px;">
+  <form class="p-3" action="{{url "App.UserSignup"}}" method="POST">
+    <div class="row">
+      {{with $field := field "user.Username" .}}
+        <div class="form-group col-md-12">
+        <label for="{{$field.Name}}">Username:</label>
+        <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="text" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
+          <div class="invalid-feedback">
+            {{$field.Error}}
+          </div>
+        </div>
+      {{end}}
+      {{with $field := field "user.Fullname" .}}
+        <div class="form-group col-md-12">
+        <label for="{{$field.Name}}">Full Name:</label>
+        <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="text" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
+          <div class="invalid-feedback">
+            {{$field.Error}}
+          </div>
+        </div>
+      {{end}}
+      {{with $field := field "user.Email" .}}
+        <div class="form-group col-md-12">
+        <label for="{{$field.Name}}">Email:</label>
+        <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="text" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
+          <div class="invalid-feedback">
+            {{$field.Error}}
+          </div>
+        </div>
+      {{end}}
+      {{with $field := field "user.Password" .}}
+        <div class="form-group col-md-6">
+        <label for="{{$field.Name}}">Password:</label>
+        <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="password" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
+          <div class="invalid-feedback">
+            {{$field.Error}}
+          </div>
+        </div>
+      {{end}}
+      <div class="form-group col-md-6">
+        <label for="cpassword">Confirm Password:</label>
+        <input class="form-control {{if .errors.cpassword}}is-invalid{{end}}" type="password" id="cpassword" name="cpassword" value="{{.flash.cpassword}}">
+        <div class="invalid-feedback">
+          {{.errors.cpassword}}
+        </div>
+      </div>
+      <div class="form-group col-md-12 d-flex justify-content-between align-items-center">
+        <button class="btn btn-primary" type="submit">Sign Up</button>
+        <a class="mx-2" href="{{url "App.Login"}}">Back to login</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+{{template "footer.html" .}}
