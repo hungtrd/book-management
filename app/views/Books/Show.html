@@ -31,6 +31,7 @@
                 id="{{$field.Name}}"
                 name="{{$field.Name}}"
                 value="{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value}}{{end}}"
+                disabled
               >
               <div class="invalid-feedback">
                 {{$field.Error}}
@@ -45,6 +46,7 @@
                 id="{{$field.Name}}"
                 name="{{$field.Name}}"
                 value="{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value}}{{end}}"
+                disabled
               >
               <div class="invalid-feedback">
                 {{$field.Error}}
@@ -55,6 +57,7 @@
             <div class="form-group col-md-12">
               <label for="{{$field.Name}}">Description:</label>
               <textarea class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" rows="4"
+                disabled
                 name="{{$field.Name}}">{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value}}{{end}}</textarea>
               <div class="invalid-feedback">
                 {{$field.Error}}
@@ -69,6 +72,7 @@
                 id="{{$field.Name}}"
                 name="{{$field.Name}}"
                 value="{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value.Format "2006-01-02"}}{{end}}"
+              disabled
               >
               <div class="invalid-feedback">
                 {{$field.Error}}
@@ -79,10 +83,11 @@
             <div class="form-group col-md-6">
               <label for="{{$field.Name}}">Total page:</label>
               <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}"
-                type="text"
+                type="number"
                 id="{{$field.Name}}"
                 name="{{$field.Name}}"
                 value="{{if $field.Flash}}{{$field.Flash}}{{else}}{{$field.Value}}{{end}}"
+                disabled
               >
               <div class="invalid-feedback">
                 {{$field.Error}}
@@ -92,7 +97,7 @@
           {{with $field := field "book.Category" .}}
             <div class="form-group col-md-6">
               <label for="{{$field.Name}}">Category:</label>
-              <select class="custom-select" name="{{$field.Name}}">
+              <select class="custom-select" name="{{$field.Name}}" disabled>
                 {{option $field 1 "Science"}}
                 {{option $field 2 "Fiction"}}
                 {{option $field 3 "Self-help"}}
@@ -102,7 +107,10 @@
           <div class="form-group col-md-12">
             <div class="d-flex justify-content-between">
               <a class="btn btn-secondary" href="{{url "Books.Index"}}">Cancel</a>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <div>
+                <a class="btn btn-success" id="btn-edit" href="#">Edit</a>
+                <button type="submit" class="btn btn-primary invisible" id="btn-submit">Submit</button>
+              </div>
             </div>
           </div>
         </div>
@@ -110,5 +118,18 @@
     </div>
   </form>
 </div>
+
+<script>
+$("#btn-edit").click(function(e){
+  console.log("edit");
+  // Show button submit
+  $("#btn-submit").removeClass("invisible");
+  $("#btn-edit").addClass("invisible");
+
+  // Enable input
+  $(".form-control").attr("disabled", false);
+  $("select").attr("disabled", false);
+})
+</script>
 
 {{template "footer.html" .}}
