@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/base64"
 	"revel-app-demo/app"
 	"time"
 
@@ -15,6 +16,7 @@ type Book struct {
 	ReleaseDate time.Time `json:"release_date"`
 	TotalPage   int       `json:"total_page"`
 	Category    int       `json:"category"`
+	Cover       []byte    `json:"cover"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
 }
@@ -23,6 +25,7 @@ func (book *Book) Validate(v *revel.Validation) {
 	v.Required(book.Title).Message("Title is required")
 	v.Required(book.Author).Message("Author is required")
 	v.Required(book.ReleaseDate).Message("Release date is required")
+	// v.Required(book.Cover).Message("Book's cover is required")
 }
 
 func (book *Book) GetList() []Book {
@@ -40,6 +43,7 @@ func (book *Book) Create() Book {
 		ReleaseDate: book.ReleaseDate,
 		TotalPage:   book.TotalPage,
 		Category:    book.Category,
+		Cover:       book.Cover,
 		CreatedAt:   time.Now(),
 		UpdatedAt:   time.Now(),
 	}
@@ -63,4 +67,8 @@ func (book *Book) Update(id int, b Book) {
 
 func (book *Book) DeleteByID(id int) {
 	app.DB.Delete(&Book{}, id)
+}
+
+func (book *Book) CoverBs64() string {
+	return base64.StdEncoding.EncodeToString([]byte(book.Cover))
 }
