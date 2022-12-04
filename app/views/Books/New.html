@@ -14,12 +14,29 @@
 </div>
 
 <div class="shadow p-3 book-form">
-  <form class="p-3" action="{{url "Books.Create"}}" method="POST">
+  <form class="p-3" action="{{url "Books.Create"}}" method="POST" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-5 book-form--thumbnail">
-        <div class="shadow p-3 m-1 rounded-lg text-center" style="height:500px">
-          <img class="book-cover" src="https://chaubui.net/wp-content/uploads/2021/11/123.jpg" alt="...">
+        <div class="shadow p-3 m-1 rounded-lg" style="height:500px">
+          <!-- {{with $field := field "book.Cover" .}} -->
+          <!--   <div class="custom-file mb-3"> -->
+          <!--     <input type="file" class="custom-file-input" id="validatedCustomFile" name="{{$field.Name}}"> -->
+          <!--     <label class="custom-file-label" for="validatedCustomFile">Choose file...</label> -->
+          <!--     <div class="invalid-feedback"> -->
+          <!--       {{$field.Error}} -->
+          <!--     </div> -->
+          <!--   </div> -->
+          <!-- {{end}} -->
+          <div class="form-group">
+            <label for="cover">Cover</label>
+            <input type="file" class="form-control-file" id="cover" name="cover">
+            <div class="invalid-feedback">
+            </div>
+          </div>
         </div>
+        <!-- <div class="shadow p-3 m-1 rounded-lg text-center" style="height:500px"> -->
+        <!--   <img class="book-cover" src="https://chaubui.net/wp-content/uploads/2021/11/123.jpg" alt="..."> -->
+        <!-- </div> -->
       </div>
       <div class="col-md-7 book-form--info">
         <div class="shadow p-3 m-1 rounded-lg row">
@@ -27,7 +44,6 @@
             <div class="form-group col-md-6">
               <label for="{{$field.Name}}"><span class="text-danger">*</span>Title:</label>
               <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="text" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
-              <!-- <span>*</span> -->
               <div class="invalid-feedback">
                 {{$field.Error}}
               </div>
@@ -37,7 +53,6 @@
             <div class="form-group col-md-6">
               <label for="{{$field.Name}}"><span class="text-danger">*</span>Author:</label>
               <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="text" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
-              <!-- <span>*</span> -->
               <div class="invalid-feedback">
                 {{$field.Error}}
               </div>
@@ -47,7 +62,6 @@
             <div class="form-group col-md-12">
               <label for="{{$field.Name}}">Description:</label>
               <textarea class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" name="{{$field.Name}}" value="{{$field.Flash}}" rows="4">{{$field.Flash}}</textarea>
-              <!-- <span>*</span> -->
               <div class="invalid-feedback">
                 {{$field.Error}}
               </div>
@@ -57,7 +71,6 @@
             <div class="form-group col-md-6">
               <label for="{{$field.Name}}"><span class="text-danger">*</span>Release Date:</label>
               <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="date" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
-              <!-- <span>*</span> -->
               <div class="invalid-feedback">
                 {{$field.Error}}
               </div>
@@ -67,7 +80,6 @@
             <div class="form-group col-md-6">
               <label for="{{$field.Name}}">Total page:</label>
               <input class="form-control {{if $field.ErrorClass}}is-invalid{{end}}" type="text" id="{{$field.Name}}" name="{{$field.Name}}" value="{{$field.Flash}}">
-              <!-- <span>*</span> -->
               <div class="invalid-feedback">
                 {{$field.Error}}
               </div>

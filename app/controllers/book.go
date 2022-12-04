@@ -17,8 +17,10 @@ func (c Books) New() revel.Result {
 	return c.Render()
 }
 
-func (c Books) Create(book models.Book) revel.Result {
+func (c Books) Create(book models.Book, cover []byte) revel.Result {
 	fmt.Println(book)
+	fmt.Println(string(cover))
+	book.Cover = cover
 
 	book.Validate(c.Validation)
 
@@ -53,7 +55,9 @@ func (c Books) Show(id int) revel.Result {
 	b := models.Book{}
 
 	book := b.GetByID(id)
-	return c.Render(book)
+	cover := book.CoverBs64()
+
+	return c.Render(book, cover)
 }
 
 func (c Books) Update(id int, book models.Book) revel.Result {
@@ -76,7 +80,6 @@ func (c Books) Update(id int, book models.Book) revel.Result {
 	}
 
 	b.Update(id, book)
-
 	c.Flash.Success("Update book successfully!")
 	return c.Redirect(routes.Books.Index())
 }
